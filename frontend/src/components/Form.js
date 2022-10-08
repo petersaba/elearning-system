@@ -1,5 +1,6 @@
 import Button from "./Button";
 import Input from "./Input";
+import LoginSignUpSwitch from "./LoginSignUpSwitch";
 
 const Form = ({ type, onClick }) => {
     if(type == 'login'){
@@ -9,6 +10,7 @@ const Form = ({ type, onClick }) => {
                 <Input type={'text'} id="email" text={'Email'}/>
                 <Input type={'password'} id="password" text={'Password'}/>
                 <Button text='Login'></Button>
+                <LoginSignUpSwitch/>
             </form>
         );
     }
