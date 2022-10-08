@@ -1,3 +1,9 @@
+@font-face{
+  src: url('./assets/fonts/Anton-Regular.ttf');
+  font-family: anton;
+}
+
+
 /* CSS Reset */
 *{
   margin: 0;
@@ -10,7 +16,7 @@
 }
 
 .hero{
-  background-image: url("./images/hero.jpg");
+  background-image: url("./assets/images/hero.jpg");
   height: 100vh;
   width: calc(100vw - 500px);
   background-repeat: no-repeat;
@@ -28,4 +34,20 @@
 
 .form > div{
   text-align: center;
+}
+
+.form > h1{
+  font-family: anton;
+  font-size: 60px;
+  color: #4831D4;
+}
+
+.input > input{
+  height: 30px;
+  width: 250px;
+  position: relative;
+}
+
+input::placeholder{
+  color: transparent;
 }
