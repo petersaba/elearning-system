@@ -9,8 +9,10 @@ const Form = ({ type, onClick }) => {
                 <h1>{type}</h1>
                 <Input type={'text'} id="email" text={'Email'}/>
                 <Input type={'password'} id="password" text={'Password'}/>
-                <Button text='Login'></Button>
-                <LoginSignUpSwitch/>
+                <div>
+                    <Button text='Login'></Button>
+                    <LoginSignUpSwitch/>
+                </div>
             </form>
         );
     }
