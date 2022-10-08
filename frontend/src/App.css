@@ -92,3 +92,7 @@ input::placeholder{
   border-radius: 5px;
   border: 0;
 }
+
+.switch-pages{
+  font-size: 13px;
+}
