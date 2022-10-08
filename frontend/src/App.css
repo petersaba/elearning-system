@@ -54,6 +54,7 @@
   padding-left: 10px;
   z-index: 5;
   background-color: transparent;
+  font-size: 16px;
 }
 
 input::placeholder{
@@ -67,4 +68,16 @@ input::placeholder{
   color: grey;
   transform: translate(0, -50%);
   z-index: -1;
+  transition: 0.5s;
+}
+
+.input > input:focus + label, .input > input:not(:placeholder-shown) + label{
+  left: 5px;
+  top: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4831D4;
+  background-color: white;
+  z-index: 10;
+  padding: 0 5px;
 }
