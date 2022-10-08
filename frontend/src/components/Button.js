@@ -1,7 +1,11 @@
-const Button = ({ text, onClick}) => {
+const Button = ({ text, onClick, submit}) => {
     return (
-        <button onClick={onClick}>{text}</button>
+        <button type={type ? "button" : "submit"} className="button" onClick={onClick}>{text}</button>
     );
+}
+
+Button.defaultProps = {
+    submit: false
 }
 
 export default Button;
