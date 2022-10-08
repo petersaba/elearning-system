@@ -42,12 +42,29 @@
   color: #4831D4;
 }
 
-.input > input{
-  height: 30px;
-  width: 250px;
+.input{
   position: relative;
+}
+
+.input > input{
+  height: 40px;
+  width: 250px;
+  border-radius: 5px;
+  border: 1px solid #4831D4;
+  padding-left: 10px;
+  z-index: 5;
+  background-color: transparent;
 }
 
 input::placeholder{
   color: transparent;
+}
+
+.input > label{
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  color: grey;
+  transform: translate(0, -50%);
+  z-index: -1;
 }
