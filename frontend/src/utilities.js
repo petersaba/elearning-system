@@ -39,3 +39,9 @@ export const checkStrongPassword = (password) => {
     
     return true;
 }
+
+export const samePasswords = (password1, password2) => {
+    if(password1 == password2)
+        return true;
+    return false;
+}
