@@ -75,6 +75,8 @@ export const axiosGet = async (api, token=null) => {
 
 export const validateLogin = (e, email, password) => {
     e.preventDefault();
+    if(email == '' || password == '')
+        return 'Please fill all fields';
     if(!checkValidEmail(email))
         return 'Invalid email format';
     if(!checkStrongPassword(password))
@@ -83,6 +85,8 @@ export const validateLogin = (e, email, password) => {
 
 export const validateSignUp = (e, email, full_name, password, confirm_password) => {
     e.preventDefault();
+    if(email == '' || password == '' || full_name == '' || confirm_password == '')
+        return 'Please fill all fields';
     const message = validateLogin(e, email, password);
     if(message)
         return message;
