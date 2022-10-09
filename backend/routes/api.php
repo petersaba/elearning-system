@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::post('user/{id?}', [AuthController::class, 'addOrEditUser']);
+Route::post('register/{type?}', [AuthController::class, 'addUser']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
 
 

@@ -4,30 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Models\Favorite;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 use App\Models\User;
-use Illuminate\Database\Console\Migrations\StatusCommand;
 use Illuminate\Http\Request;
 
-use function PHPUnit\Framework\isEmpty;
 
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api', ['except' => ['login']]);
-    // }
 
-    public function addOrEditUser(Request $request, $id='add'){
-
+    public function addUser(Request $request, $type){
+        $validator = validator($request->all(), [
+            'full_name' => 'string|required',
+            'email' => 'email|required',
+            'password' => 'string|required',
+            'confirm_password' => 'string|required'
+        ]);
         
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Data is invalid'
+            ], 415);
+        }
     }
 
     /**
