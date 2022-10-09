@@ -1,7 +1,11 @@
-const Button = ({ text, onClick, submit}) => {
-    return (
-        <button type={submit ? "button" : "submit"} className="button" onClick={onClick}>{text}</button>
-    );
+const Button = (props) => {
+    if(props.type == 'login'){
+        return (
+            <button type={props.submit ? "button" : "submit"} className="button" 
+            onClick={(e) => props.onClick(e, props.email, props.password)}>
+            {props.text}</button>
+        );
+    }
 }
 
 Button.defaultProps = {

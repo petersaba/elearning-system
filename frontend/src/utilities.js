@@ -1,7 +1,4 @@
-export const disableRefresh = (e) => {
-    e.preventDefault();
-    console.log('hello world');
-}
+import axios from "axios";
 
 export const checkValidEmail = (email) => {
     const pattern = /^.{3,}@[^\W_]{3,}\.[^\W_]{2,}$/;
@@ -74,4 +71,12 @@ export const axiosGet = async (api, token=null) => {
         console.log('Error from Api');
         console.log(error);
     }
+}
+
+export const validateLogin = (e, email, password) => {
+    e.preventDefault();
+    if(!checkValidEmail(email))
+        return 'Invalid email';
+    if(!checkStrongPassword(password))
+        return 'Password is not strong enough';
 }
