@@ -66,8 +66,20 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
+        $validator = validator($request->all(), [
+            'email' => 'email|required',
+            'password' => 'string|required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Data is invalid'
+            ], 415);
+        }
+
         $credentials = request(['email', 'password']);
 
         if (! $token = JWTAuth::attempt($credentials)) {
