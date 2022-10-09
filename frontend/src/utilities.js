@@ -39,7 +39,7 @@ export const checkStrongPassword = (password) => {
 
 export const samePasswords = (password1, password2) => {
     if(password1 == password2)
-    return true;
+        return true;
     return false;
 }
 
@@ -76,7 +76,16 @@ export const axiosGet = async (api, token=null) => {
 export const validateLogin = (e, email, password) => {
     e.preventDefault();
     if(!checkValidEmail(email))
-        return 'Invalid email';
+        return 'Invalid email format';
     if(!checkStrongPassword(password))
         return 'Password is not strong enough';
+}
+
+export const validateSignUp = (e, email, full_name, password, confirm_password) => {
+    e.preventDefault();
+    const message = validateLogin(e, email, password);
+    if(message)
+        return message;
+    if(!samePasswords(password, confirm_password))
+        return 'passwords do not match';
 }
