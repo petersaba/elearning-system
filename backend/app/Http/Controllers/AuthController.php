@@ -21,11 +21,25 @@ class AuthController extends Controller
             'confirm_password' => 'string|required'
         ]);
         
-        if($validator->fails()){
+        if($validator->fails() || !in_array($type, ['admin', 'instructor', 'student'])
+                || $request->password != $request->confirm_password){
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Data is invalid'
             ], 415);
+        }
+
+        $user = new User();
+        $user->full_name = $request->full_name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->type = $type;
+
+        if($user->save()){
+            return response()->json([
+                'status' => 'Success',
+                'message' => $user
+            ]);
         }
     }
 
