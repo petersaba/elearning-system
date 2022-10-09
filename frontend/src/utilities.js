@@ -11,3 +11,31 @@ export const checkValidEmail = (email) => {
 export const checkPattern = (value, pattern) => {
     return value.search(pattern);
 }
+
+export const checkStrongPassword = (password) => {
+    if(password.length < 16)
+        return false;
+
+    let pattern = / /;
+    if(checkPattern(password, pattern) != -1)
+        return false;
+
+    pattern = /\d.*\d/;
+    if(checkPattern(password, pattern) == -1) 
+        return false;
+    
+    pattern = /[A-Z].*[A-Z]/;
+    if(checkPattern(password, pattern) == -1)
+        return false;
+
+    pattern = /[a-z].*[a-z]/;
+    if(checkPattern(password, pattern) == -1)
+        return false;
+
+    // checkign for 2 symbols
+    pattern = /[\W_].*[\W_]/;
+    if(checkPattern(password, pattern) == -1)
+        return false;
+    
+    return true;
+}
