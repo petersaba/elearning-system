@@ -45,3 +45,17 @@ export const samePasswords = (password1, password2) => {
         return true;
     return false;
 }
+
+export const axiosPost = async (api, data, token=null) => {
+    try{
+        return await axios.post(utils.baseUrl + api, data,
+                                {
+                                    headers: {
+                                        'Authorization': "Bearer" + token
+                                    }
+                                });
+    }catch(error){
+        console.log('Error from API');
+        console.log(error);
+    }
+}
