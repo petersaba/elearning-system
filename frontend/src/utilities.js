@@ -1,14 +1,13 @@
-const disableRefresh = (e) => {
+export const disableRefresh = (e) => {
     e.preventDefault();
+    console.log('hello world');
 }
 
-const checkValidEmail = (email) => {
+export const checkValidEmail = (email) => {
     const pattern = /^.{3,}@[^\W_]{3,}\.[^\W_]{2,}$/;
-    return utils.checkPattern(email, pattern);
+    return checkPattern(email, pattern);
 }
 
-const checkPattern = (value, pattern) => {
+export const checkPattern = (value, pattern) => {
     return value.search(pattern);
 }
-
-export default {disableRefresh, checkPattern, checkValidEmail};
