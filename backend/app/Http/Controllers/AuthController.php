@@ -29,6 +29,13 @@ class AuthController extends Controller
             ], 415);
         }
 
+        if(self::isAttributeAlreadyUsed($request->email, 'email')){
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'User already exists'
+            ], 403);
+        }
+
         $user = new User();
         $user->full_name = $request->full_name;
         $user->email = $request->email;
@@ -39,8 +46,18 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 'Success',
                 'message' => $user
-            ]);
+            ], 201);
         }
+    }
+
+    function isAttributeAlreadyUsed($value, $attribute){
+        if($attribute == 'id'){
+            $user = User::find($value)->first();
+        }else{
+            $user = User::where($attribute, $value)->first();
+        }
+
+        return $user ? TRUE : FALSE;
     }
 
     /**
