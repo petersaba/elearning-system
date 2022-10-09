@@ -2,22 +2,20 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
-import disableRefresh from "../utilities";
+import { disableRefresh } from "../utilities";
 
 const Form = ({ type, onClick }) => {
     const [inputValues, setInputValues] = useState({});
-    const [path, setPath] = useState([]);
 
-    if(path != window.location.pathname)
-        setPath(window.location.pathname);
-
+    // resetting input values when changing path
+    let path;
+    path = path == window.location.pathname ? path : window.location.pathname;    
     useEffect(() => {
         setInputValues({});
-        console.log(inputValues);
     }, [path]);
 
     // save input field value to InputValues object
-    function saveToInptValue(attribute, value){
+    function saveToInputValue(attribute, value){
         setInputValues({...inputValues, [attribute]: value});
     }
 
@@ -26,10 +24,10 @@ const Form = ({ type, onClick }) => {
         return (
             <form className="form">
                 <h1>{type}</h1>
-                <Input type={'text'} id="email" text={'Email'} onChange={saveToInptValue}/>
-                <Input type={'password'} id="password" text={'Password'} onChange={saveToInptValue}/>
+                <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValue}/>
+                <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
                 <div>
-                    <Button text={type} onClick={disableRefresh}></Button>
+                    <Button text={type} onClick={disableRefresh}/>
                     <LoginSignUpSwitch/>
                 </div>
             </form>
@@ -41,12 +39,12 @@ const Form = ({ type, onClick }) => {
         return (
             <form className="form">
                 <h1>{type}</h1>
-                <Input type={'text'} id="email" text={'Email'} onChange={saveToInptValue}/>
-                <Input type={'text'} id="full_name" text={'Full Name'} onChange={saveToInptValue}/>
-                <Input type={'password'} id="password" text={'Password'} onChange={saveToInptValue}/>
-                <Input type={'password'} id="confirm_password" text={'Confirm Password'} onChange={saveToInptValue}/>
+                <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValue}/>
+                <Input type={'text'} id="full_name" text={'Full Name'} onChange={saveToInputValue}/>
+                <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
+                <Input type={'password'} id="confirm_password" text={'Confirm Password'} onChange={saveToInputValue}/>
                 <div>
-                    <Button text={type} onClick={disableRefresh}></Button>
+                    <Button text={type} onClick={disableRefresh}/>
                     <LoginSignUpSwitch type={'Sign Up'}/>
                 </div>
             </form>
