@@ -1,16 +1,16 @@
 import axios from "axios";
 
-export const checkValidEmail = (email) => {
-    const pattern = /^.{3,}@[^\W_]{3,}\.[^\W_]{2,}$/;
-    return checkPattern(email, pattern);
-}
-
 export const checkPattern = (value, pattern) => {
     return value.search(pattern);
 }
 
+export const checkValidEmail = (email) => {
+    const pattern = /^.{3,}@[^\W_]{3,}\.[^\W_]{2,}$/;
+    return checkPattern(email, pattern) == -1 ? false : true;
+}
+
 export const checkStrongPassword = (password) => {
-    if(password.length < 16)
+    if(password.length < 12)
         return false;
 
     let pattern = / /;

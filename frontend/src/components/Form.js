@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
-import { disableRefresh } from "../utilities";
+import { validateLogin } from "../utilities";
 
 const Form = ({ type, onClick }) => {
     const [inputValues, setInputValues] = useState({});
@@ -19,16 +19,24 @@ const Form = ({ type, onClick }) => {
         setInputValues({...inputValues, [attribute]: value});
     }
 
+    const [error, setError] = useState('');
+
     // Form for the login
     if(type == 'Login'){
+        
+        function changeErrorField(e, email, password){
+            const message = validateLogin(e, email, password);
+            setError(message ? message : '');
+        }
+
         return (
             <form className="form">
                 <h1>{type}</h1>
-                <span className="error">here goes the error</span>
+                <span className="error">{error}</span>
                 <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValue}/>
                 <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
                 <div>
-                    <Button text={type} onClick={disableRefresh}/>
+                    <Button text={type} onClick={changeErrorField} email={inputValues.email} password={inputValues.password} type={type}/>
                     <LoginSignUpSwitch/>
                 </div>
             </form>
@@ -40,13 +48,13 @@ const Form = ({ type, onClick }) => {
         return (
             <form className="form">
                 <h1>{type}</h1>
-                <span className="error">here goes the error</span>
+                <span className="error">{error}</span>
                 <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValue}/>
                 <Input type={'text'} id="full_name" text={'Full Name'} onChange={saveToInputValue}/>
                 <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
                 <Input type={'password'} id="confirm_password" text={'Confirm Password'} onChange={saveToInputValue}/>
                 <div>
-                    <Button text={type} onClick={disableRefresh}/>
+                    <Button text={type} onClick={validateLogin}/>
                     <LoginSignUpSwitch type={'Sign Up'}/>
                 </div>
             </form>
