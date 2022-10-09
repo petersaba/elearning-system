@@ -42,13 +42,15 @@ export const checkStrongPassword = (password) => {
 
 export const samePasswords = (password1, password2) => {
     if(password1 == password2)
-        return true;
+    return true;
     return false;
 }
 
+const baseUrl = 'http://127.0.0.1:8000/api/';
+
 export const axiosPost = async (api, data, token=null) => {
     try{
-        return await axios.post(utils.baseUrl + api, data,
+        return await axios.post(baseUrl + api, data,
                                 {
                                     headers: {
                                         'Authorization': "Bearer" + token
@@ -56,6 +58,20 @@ export const axiosPost = async (api, data, token=null) => {
                                 });
     }catch(error){
         console.log('Error from API');
+        console.log(error);
+    }
+}
+
+export const axiosGet = async (api, token=null) => {
+    try{
+        return await axios.get(baseUrl + api,
+            {
+                headers: {
+                    'Authorization': "Bearer " + token
+                }
+            });
+    }catch(error){
+        console.log('Error from Api');
         console.log(error);
     }
 }
