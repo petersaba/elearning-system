@@ -24,6 +24,7 @@ const Form = ({ type, onClick }) => {
         return (
             <form className="form">
                 <h1>{type}</h1>
+                <span className="error">here goes the error</span>
                 <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValue}/>
                 <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
                 <div>
@@ -39,6 +40,7 @@ const Form = ({ type, onClick }) => {
         return (
             <form className="form">
                 <h1>{type}</h1>
+                <span className="error">here goes the error</span>
                 <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValue}/>
                 <Input type={'text'} id="full_name" text={'Full Name'} onChange={saveToInputValue}/>
                 <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
