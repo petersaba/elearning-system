@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
-import { validateLogin } from "../utilities";
+import { validateLogin, validateSignUp } from "../utilities";
 
 const Form = ({ type, onClick }) => {
     const [inputValues, setInputValues] = useState({});
@@ -36,7 +36,10 @@ const Form = ({ type, onClick }) => {
                 <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValue}/>
                 <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
                 <div>
-                    <Button text={type} onClick={changeErrorField} email={inputValues.email} password={inputValues.password} type={type}/>
+                    <Button text={type} onClick={changeErrorField} 
+                        email={inputValues.email} 
+                        password={inputValues.password} 
+                        type={type}/>
                     <LoginSignUpSwitch/>
                 </div>
             </form>
@@ -45,6 +48,12 @@ const Form = ({ type, onClick }) => {
 
     // form for the sign up
     if(type == 'Sign Up'){
+
+        function changeErrorField(e, email, full_name, password, confirm_password){
+            const message = validateSignUp(e, email, full_name, password, confirm_password);
+            setError(message ? message : '');
+        }
+
         return (
             <form className="form">
                 <h1>{type}</h1>
@@ -54,7 +63,12 @@ const Form = ({ type, onClick }) => {
                 <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
                 <Input type={'password'} id="confirm_password" text={'Confirm Password'} onChange={saveToInputValue}/>
                 <div>
-                    <Button text={type} onClick={validateLogin}/>
+                    <Button text={type} onClick={changeErrorField} 
+                        email={inputValues.email}
+                        full_name={inputValues.full_name}
+                        password={inputValues.password}
+                        confirm_password={inputValues.confirm_password}
+                        type={type}/>
                     <LoginSignUpSwitch type={'Sign Up'}/>
                 </div>
             </form>
