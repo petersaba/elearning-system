@@ -92,4 +92,12 @@ export const validateSignUp = (e, email, full_name, password, confirm_password) 
         return message;
     if(!samePasswords(password, confirm_password))
         return 'passwords do not match';
+
+    const data = new FormData();
+    data.append('email', email);
+    data.append('full_name', full_name);
+    data.append('password', password);
+    data.append('confirm_password', confirm_password);
+
+    axiosPost('register/admin', data);
 }
