@@ -7,6 +7,7 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Announcement;
 use Illuminate\Contracts\Validation\ValidatorAwareRule;
 // use Jenssegers\Mongodb\Auth;
 use Illuminate\Support\Facades\Auth;
@@ -81,7 +82,7 @@ class CreateController extends Controller
     function createAnnouncement(Request $request){
         $validator = validator($request->all(), [
             'title' => 'string|required',
-            'message' => 'string|required'
+            'content' => 'string|required'
         ]);
 
         if($validator->fails()){
@@ -89,6 +90,18 @@ class CreateController extends Controller
                 'status' => 'Error',
                 'message' => 'Data is invalid'
             ], 415);
+        }
+
+        $announcement = new Announcement();
+        $announcement->instructor_id = Auth::id();
+        $announcement->title = $request->title;
+        $announcement->content = $request->content;
+
+        if($announcement->save()){
+            return response()->json([
+                'status' => 'Success',
+                'message' => $announcement
+            ], 201);
         }
     }
 }
