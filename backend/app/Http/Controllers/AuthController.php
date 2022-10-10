@@ -39,7 +39,7 @@ class AuthController extends Controller
         $user = new User();
         $user->full_name = $request->full_name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = bcrypt($request->password);
         $user->type = $type;
 
         if($user->save()){
@@ -86,7 +86,13 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return $this->respondWithToken($token);
+        $user = Auth::user();
+        $user-> token = $this->respondWithToken($token);
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => $user
+        ], 200);
     }
 
     /**
