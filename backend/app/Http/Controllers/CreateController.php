@@ -26,6 +26,17 @@ class CreateController extends Controller
                 'message' => 'Course already exists'
             ], 403);
         }
+
+        $course = new Course();
+        $course->code = $request->code;
+        $course->name = $request->name;
+
+        if($course->save()){
+            return response()->json([
+                'status' => 'Success',
+                'message' => $course
+            ], 201);
+        }
     }
 
     function isAttributeAlreadyUsed($value, $attribute){
