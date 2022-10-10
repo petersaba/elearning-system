@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 use App\Models\User;
+use App\Models\Assignment;
 use Illuminate\Http\Request;
 
 
@@ -41,6 +42,9 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->type = $type;
+        if($type != 'admin'){
+            $user->courses = [];
+        }
 
         if($user->save()){
             return response()->json([
@@ -87,7 +91,7 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-        $user-> token = $this->respondWithToken($token);
+        $user->token = $this->respondWithToken($token);
 
         return response()->json([
             'status' => 'Success',
