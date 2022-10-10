@@ -115,6 +115,19 @@ input::placeholder{
   display: flex;
   flex-direction: column;
   position: fixed;
-  gap: 30vh;
-  padding-top: 15vh;
+  gap: 20vh;
+  padding: 15vh 20px 0 20px;
+}
+
+.dashboard > h3{
+  font-size: 30px;
+}
+
+.dashboard > ul{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  font-size: 23px;
 }
