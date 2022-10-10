@@ -131,3 +131,9 @@ input::placeholder{
   gap: 30px;
   font-size: 23px;
 }
+
+.dashboard > ul > li > *{
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+}
