@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Http\Controllers\Controller;
+// use Jenssegers\Mongodb\Auth;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CreateController extends Controller
 {
@@ -56,6 +62,18 @@ class CreateController extends Controller
                 'status' => 'Error',
                 'message' => 'Data is invalid'
             ], 415);
+        }
+
+        $assignment = new Assignment();
+        $assignment->instructor_id = Auth::id();
+        $assignment->title = $request->title;
+        $assignment->content = $request->content;
+
+        if($assignment->save()){
+            return response()->json([
+                'status' => 'Success',
+                'message' => $assignment
+            ], 201);
         }
     }
 }
