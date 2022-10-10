@@ -8,21 +8,31 @@ use Illuminate\Http\Request;
 
 class ActionsController extends Controller
 {
-    function assignInstructorToCourse($instructor_id, $course_id){
-        $instructor = User::find($instructor_id);
-        if(!$instructor){
+    function assignInstructorToCourse(Request $request){
+        $instructor = User::find($request->instructor_id);
+        if(!$instructor || $instructor->type != 'instructor'){
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Instructor does not exist'
             ], 404);
         }
 
-        $course = Course::find($course_id);
+        $course = Course::find($request->course_id);
         if(!$course){
             return response()->json([
                 'status' => 'Error',
                 'message' => 'Course does not exist'
             ], 404);
+        }
+
+
+        $course->instructor_id = $request->instructor_id;
+        $instructor->push('courses', $request->course_id);
+
+        if($instructor->save() && $course->save()){
+            return response()->json([
+                'status' => 'Success',
+            ], 201);
         }
     }
 }
