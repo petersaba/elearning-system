@@ -25,6 +25,12 @@ class ActionsController extends Controller
             ], 404);
         }
 
+        if($course->instructor_id){
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Course already has instructor assigned'
+            ], 415);
+        }
 
         $course->instructor_id = $request->instructor_id;
         $instructor->push('courses', $request->course_id);
