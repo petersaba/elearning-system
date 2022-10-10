@@ -32,5 +32,18 @@ class GetDataController extends Controller
                 'message' => 'Data is invalid'
             ], 415);
         } 
+
+        $user = User::find($id);
+        if($user){
+            return response()->json([
+                'status' => 'Success',
+                'message' => $user
+            ], 200);
+        }
+
+        return  response()->json([
+            'status' => 'Error',
+            'message' => 'User does not exist'
+        ], 404);
     }
 }
