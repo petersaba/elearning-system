@@ -20,8 +20,8 @@ const Dashboard = ({ type, full_name }) => {
                 <h3>instructor full name</h3>
                 <ul>
                     <li><Link to='/instructor/add_student'>Add Student</Link></li>
-                    <li><Link to='/instructor/add_assignment'>Add Assignment</Link></li>
-                    <li><Link to='/instructor/add_announcement'>Add Announcement</Link></li>
+                    <li><Link to='/instructor/create_assignment'>Add Assignment</Link></li>
+                    <li><Link to='/instructor/create_announcement'>Add Announcement</Link></li>
                 </ul>
             </div>
         );

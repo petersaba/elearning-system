@@ -30,6 +30,14 @@ const Button = (props) => {
             {props.text}</button>
         );
     }
+
+    if(props.type == 'Create Assignment'){
+        return (
+            <button type={props.submit ? "submit" : "button"} className="button" 
+            onClick={(e) => props.onClick(e, props.title, props.content)}>
+            {props.text}</button>
+        );
+    }
 }
 
 Button.defaultProps = {
