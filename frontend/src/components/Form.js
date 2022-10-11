@@ -177,7 +177,7 @@ const Form = ({ type }) => {
         );
     }
 
-    if(type == 'Create Assignment'){
+    if(type == 'Create Assignment' || type == 'Create Announcement'){
         
         async function changeErrorField(e, title, content){
             e.preventDefault();

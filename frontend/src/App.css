@@ -91,7 +91,7 @@ input::placeholder{
 }
 
 .button{
-  width: 175px;
+  min-width: 175px;
   height: 40px;
   margin-top: 10px;
   font-size: 20px;
@@ -100,6 +100,7 @@ input::placeholder{
   border-radius: 5px;
   border: 0;
   cursor: pointer;
+  padding: 10px;
 }
 
 .switch-pages{

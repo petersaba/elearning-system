@@ -31,7 +31,7 @@ const Button = (props) => {
         );
     }
 
-    if(props.type == 'Create Assignment'){
+    if(props.type == 'Create Assignment' || props.type == 'Create Announcement'){
         return (
             <button type={props.submit ? "submit" : "button"} className="button" 
             onClick={(e) => props.onClick(e, props.title, props.content)}>
