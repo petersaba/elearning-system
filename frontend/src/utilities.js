@@ -114,7 +114,7 @@ export const signUp = async (e, email, full_name, password, confirm_password, ty
 export const validateSignUp = (e, email, full_name, password, confirm_password, type) => {
     e.preventDefault();
 
-    if(email == '' || password == '' || full_name == '' || confirm_password == '')
+    if(!email || !password || !full_name || !confirm_password || !type)
         return 'Please fill all fields';
     if(!checkValidEmail(email))
         return 'Invalid email format';
