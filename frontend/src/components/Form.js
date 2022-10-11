@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
-import { validateLogin, validateSignUp } from "../utilities";
+import { login, signUp, validateSignUp } from "../utilities";
 import DropDown from "./DropDown";
 
 const Form = ({ type }) => {
@@ -27,7 +27,7 @@ const Form = ({ type }) => {
     if(type == 'Login'){
         
         async function changeErrorField(e, email, password){
-            const message = await validateLogin(e, email, password);
+            const message = await login(e, email, password);
             setError(message ? message : '');
         }
 
@@ -51,8 +51,8 @@ const Form = ({ type }) => {
     // form for the sign up
     if(type == 'Sign Up'){
 
-        async function changeErrorField(e, email, full_name, password, confirm_password){
-            const message = await validateSignUp(e, email, full_name, password, confirm_password, 'admin');
+        async function changeErrorField(e, email, full_name, password, confirm_password, user_type='admin'){
+            const message = await signUp(e, email, full_name, password, confirm_password, user_type);
             setError(message ? message : 'Account has been created');
         }
 
@@ -70,6 +70,7 @@ const Form = ({ type }) => {
                         full_name={inputValues.full_name}
                         password={inputValues.password}
                         confirm_password={inputValues.confirm_password}
+                        user_type={inputValues.type}
                         type={type}/>
                     <LoginSignUpSwitch type={'Sign Up'}/>
                 </div>
@@ -78,8 +79,8 @@ const Form = ({ type }) => {
     }
 
     if(type == 'Add User'){
-        function changeErrorField(e, email, full_name, password, confirm_password, type){
-            const message = validateSignUp(e, email, full_name, password, confirm_password, type);
+        function changeErrorField(e, email, full_name, password, confirm_password, user_type){
+            const message = validateSignUp(e, email, full_name, password, confirm_password, user_type);
             setError(message ? message : '');
         }
 
@@ -99,6 +100,7 @@ const Form = ({ type }) => {
                         full_name={inputValues.full_name}
                         password={inputValues.password}
                         confirm_password={inputValues.confirm_password}
+                        user_type={inputValues.type}
                         type={type}/>
                 </div>
             </form>
