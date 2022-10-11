@@ -182,3 +182,17 @@ export const assignInstructor = async (instructor_id, course_id) => {
     if(response.data.status == 'Success')
         return 'Instructor assigned successfully';
 }
+
+export const createAssignment = async (title, content) => {
+    if(!title || !content)
+        return 'Please fill all fields';
+
+    const token = JSON.parse(localStorage.getItem('current_user')).token.original.access_token;
+
+    const data = new FormData();
+    data.append('title', title);
+    data.append('content', content);
+    const response = await axiosPost('assignments', data, token);
+
+    return 'Assignment created successfully';
+}
