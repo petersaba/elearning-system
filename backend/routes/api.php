@@ -17,9 +17,5 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('users/{id}', [GetDataController::class, 'getUserById']);
     Route::post('assign_instructor', [ActionsController::class, 'assignInstructorToCourse']);
     Route::get('unassigned_courses', [GetDataController::class, 'getUnassignedCourses']);
+    Route::post('enroll_in_course', [ActionsController::class, 'enrollInCourse']);
 });
-
-
-//     Route::post('logout', [AuthController::class, 'logout']);
-//     Route::post('refresh', [AuthController::class, 'refresh']);
-//     Route::post('me', [AuthController::class, 'me']);
