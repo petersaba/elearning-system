@@ -11,13 +11,13 @@ const Courses = (props) => {
 
     if(courses){
         return (
-            <table className="courses-table fix-position">
+            <table className="courses-table">
             {courses.map((element) =>{
                 return (
                     <tr>
                         <td>Course Code: {element.code}</td>
                         <td>Course Name: {element.name}</td>
-                    </tr>
+                    </tr>   
                 );
             })}
 
