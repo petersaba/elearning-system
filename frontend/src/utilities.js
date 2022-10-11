@@ -1,4 +1,5 @@
 import axios from "axios";
+import Form from "./components/Form";
 
 export const checkPattern = (value, pattern) => {
     return value.search(pattern);
@@ -192,7 +193,22 @@ export const createAssignment = async (title, content) => {
     const data = new FormData();
     data.append('title', title);
     data.append('content', content);
-    const response = await axiosPost('assignments', data, token);
+    await axiosPost('assignments', data, token);
 
     return 'Assignment created successfully';
+}
+
+export const createAnnouncement = async (title, content) => {
+    if(!title || !content)
+        return 'Please fill al fields';
+    
+    const token = JSON.parse(localStorage.getItem('current_user')).token.original.access_token;
+
+    const data = new FormData();
+    data.append('title', title);
+    data.append('content', content);
+
+    await axiosPost('announcements', data, token);
+
+    return 'Announcement created successfully';
 }
