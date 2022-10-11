@@ -13,6 +13,19 @@ const Dashboard = ({ type, full_name }) => {
             </div>
         );
     }
+
+    if(type == 'instructor'){
+        return (
+            <div className="dashboard">
+                <h3>instructor full name</h3>
+                <ul>
+                    <li><Link to='/instructor/add_student'>Add Student</Link></li>
+                    <li><Link to='/instructor/add_assignment'>Add Assignment</Link></li>
+                    <li><Link to='/instructor/add_announcement'>Add Announcement</Link></li>
+                </ul>
+            </div>
+        );
+    }
 }
 
 export default Dashboard;
