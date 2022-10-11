@@ -44,7 +44,7 @@ class ActionsController extends Controller
     }
 
     function enrollInCourse(Request $request){
-        $validator = validator($request->all(), ['course_id' => 'string|required']);
+        $validator = validator($request->all(), ['course_code' => 'string|required']);
         
         if($validator->fails()){
             return response()->json([
@@ -53,7 +53,7 @@ class ActionsController extends Controller
             ], 415);
         }
 
-        $course = Course::find($request->course_id);
+        $course = Course::where('code', $request->course_code)->first();
         if(!$course){
             return response()->json([
                 'status' => 'Error',
@@ -63,7 +63,7 @@ class ActionsController extends Controller
 
         $course->push('enrolled_ids', Auth::id());
         $user = User::find(Auth::id());
-        $user->push('enrolled_in', $request->course_id);
+        $user->push('enrolled_in', $course->id);
 
         if($user->save() || $course->save()){
             return response()->json([
