@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
-import { login, signUp, validateSignUp } from "../utilities";
+import { login, signUp, validateAddCourse } from "../utilities";
 import DropDown from "./DropDown";
 
 const Form = ({ type }) => {
@@ -81,7 +81,9 @@ const Form = ({ type }) => {
         );
     }
 
+    // form to add a user by the admin
     if(type == 'Add User'){
+
         async function changeErrorField(e, email, full_name, password, confirm_password, user_type){
             const message = await signUp(e, email, full_name, password, confirm_password, user_type);
             setError(message ? message : 'Account has been created');
@@ -108,6 +110,31 @@ const Form = ({ type }) => {
                 </div>
             </form>
         );
+    }
+
+    // form to create a course by the admin
+    if(type == 'Add Course'){
+
+        function changeErrorField(e, course_code, course_name){
+            const message = validateAddCourse(e, course_code, course_name);
+            setError(message ? message : 'Course has been created');
+        }
+
+        return (
+            <form className="form fix-position">
+            <h1>{type}</h1>
+            <span className="error">{error}</span>
+            <Input type={'text'} id="course_code" text={'Course Code'} onChange={saveToInputValue}/>
+            <Input type={'text'} id="course_name" text={'Course Name'} onChange={saveToInputValue}/>
+            <div>
+                <Button text={type} 
+                onClick={changeErrorField} 
+                    course_code={inputValues.course_code}
+                    course_name={inputValues.course_name}
+                    type={type}/>
+            </div>
+            </form>
+        )
     }
 }
 
