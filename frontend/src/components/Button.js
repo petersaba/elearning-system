@@ -26,7 +26,7 @@ const Button = (props) => {
     if(props.type == 'Assign Instructor'){
         return (
             <button type={props.submit ? "submit" : "button"} className="button" 
-            onClick={(e) => props.onClick(e, props.instructor_id, props.course_id)}>
+            onClick={(e) => props.onClick(e, props.instructor_email, props.course_code)}>
             {props.text}</button>
         );
     }

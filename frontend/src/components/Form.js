@@ -151,11 +151,12 @@ const Form = ({ type }) => {
     // form to assign instructor to course
     if(type == 'Assign Instructor'){
 
-        async function changeErrorField(e, instructor_id, course_id){
+        async function changeErrorField(e, instructor_email, course_code){
             e.preventDefault();
-            console.log(`instructor id: ${instructor_id}`);
-            console.log(`course id: ${course_id}`);
-            const message = await assignInstructor(instructor_id, course_id);
+            console.log(`instructor id: ${instructor_email}`);
+            console.log(`course id: ${course_code}`);
+            const message = await assignInstructor(instructor_email, course_code);
+            setCourses(courses.filter((course) => course.code != course_code));
             setError(message);
         }
 
@@ -163,13 +164,13 @@ const Form = ({ type }) => {
             <form className="form fix-position">
                 <h1>{type}</h1>
                 <span className="error">{error}</span>
-                <DropDown type='instructor_id' onChange={saveToInputValues} {...instructors}/>
-                <DropDown type='course_id' onChange={saveToInputValues} {...courses}/>
+                <DropDown type='instructor_email' onChange={saveToInputValues} {...instructors}/>
+                <DropDown type='course_code' onChange={saveToInputValues} {...courses}/>
                 <div>
                     <Button text={type} 
                     onClick={changeErrorField} 
-                    instructor_id={inputValues.instructor_id}
-                    course_id={inputValues.course_id}
+                    instructor_email={inputValues.instructor_email}
+                    course_code={inputValues.course_code}
                     type={type}/>
                 </div>
             </form>
