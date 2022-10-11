@@ -66,4 +66,13 @@ class GetDataController extends Controller
             'message'=> $courses
         ], 200);
     }
+
+    function getCoursesEnrolledIn(){
+        $courses = Course::where('enrolled_ids', Auth::id())->get();
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => $courses
+        ], 200);
+    }
 }
