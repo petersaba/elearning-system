@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ActionsController extends Controller
 {
@@ -43,7 +44,7 @@ class ActionsController extends Controller
     }
 
     function enrollInCourse(Request $request){
-        $validator = validator($request->all(), ['id' => 'string|required']);
+        $validator = validator($request->all(), ['course_id' => 'string|required']);
         
         if($validator->fails()){
             return response()->json([
@@ -52,6 +53,14 @@ class ActionsController extends Controller
             ], 415);
         }
 
-        
+        $user = User::find(Auth::id());
+        $user->push('enrolled_in', $request->course_id);
+
+        if($user->save()){
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'Successfully enrolled in course'
+            ], 201);
+        }
     }
 }
