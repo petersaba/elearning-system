@@ -64,6 +64,13 @@ function App() {
             <Form type='Create Announcement'/>
           </>
         }/>
+        <Route path='/student/enroll_in_course' element={
+          <>
+            <Dashboard type='student'/>
+            <Navbar text='Enroll In Course'/>
+            <Form type='Enroll In Course'/>
+          </>
+        }/>
       </Routes>
     </section>
     </BrowserRouter>
