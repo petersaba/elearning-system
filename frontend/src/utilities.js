@@ -50,13 +50,15 @@ export const axiosPost = async (api, data, token=null) => {
         return await axios.post(baseUrl + api, data,
                                 {
                                     headers: {
-                                        'Authorization': "Bearer" + token
+                                        'Authorization': "Bearer" + token,
                                     }
                                 });
     }catch(error){
         console.log('Error from API');
         console.log(error.responses);
-        return error.response.data;
+        
+        if(error.response)
+            return error.response.data;
     }
 }
 
@@ -65,13 +67,15 @@ export const axiosGet = async (api, token=null) => {
         return await axios.get(baseUrl + api,
             {
                 headers: {
-                    'Authorization': "Bearer " + token
+                    'Authorization': "Bearer " + token,
                 }
             });
     }catch(error){
         console.log('Error from Api');
         console.log(error);
-        return error.response.data;
+        if(error.response)
+            return error.response.data;
+        
     }
 }
 
@@ -148,18 +152,18 @@ export const addCourse = async (e, course_code, course_name) => {
         return response.message;
 }
 
-export const getUnassignedCourses = () => {
+export const getUnassignedCourses = async () => {
     const token = JSON.parse(localStorage.getItem('current_user')).token.original.access_token;
 
-    const response = axiosGet('unassigned_courses', token);
+    const response = await axiosGet('unassigned_courses', token);
 
     return response.data.message;
 }
 
-export const getAllInstructors = () => {
+export const getAllInstructors = async () => {
     const token = JSON.parse(localStorage.getItem('current_user')).token.original.access_token;
 
-    const response = axiosGet('type/instructor', token);
+    const response = await axiosGet('type/instructor', token);
 
     return response.data.message;
 }
