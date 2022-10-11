@@ -4,6 +4,7 @@ import Form from './components/Form';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import Navbar from './components/Navbar';
+import Courses from './components/Courses';
 
 function App() {
   return (
@@ -69,6 +70,13 @@ function App() {
             <Dashboard type='student'/>
             <Navbar text='Enroll In Course'/>
             <Form type='Enroll In Course'/>
+          </>
+        }/>
+        <Route path='/student/enrolled_courses' element={
+          <>
+            <Dashboard type='student'/>
+            <Navbar text='Enrolled Courses'/>
+            <Courses/>
           </>
         }/>
       </Routes>
