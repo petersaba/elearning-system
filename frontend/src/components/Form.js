@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
-import { login, signUp, addCourse, getAllInstructors, getUnassignedCourses, assignInstructor } from "../utilities";
+import { login, signUp, addCourse, getAllInstructors, getUnassignedCourses, assignInstructor, createAssignment } from "../utilities";
 import DropDown from "./DropDown";
 
 const Form = ({ type }) => {
@@ -172,6 +172,30 @@ const Form = ({ type }) => {
                     instructor_email={inputValues.instructor_email}
                     course_code={inputValues.course_code}
                     type={type}/>
+                </div>
+            </form>
+        );
+    }
+
+    if(type == 'Create Assignment'){
+        
+        async function changeErrorField(e, title, content){
+            e.preventDefault();
+            const message = await createAssignment(title, content);
+            setError(message);
+        }
+
+        return (
+            <form className="form fix-position">
+                <h1>{type}</h1>
+                <span className="error">{error}</span>
+                <Input type={'text'} id="title" text={'Title'} onChange={saveToInputValues}/>
+                <Input type={'text'} id="content" text={'Content'} onChange={saveToInputValues}/>
+                <div>
+                    <Button text={type} onClick={changeErrorField} 
+                        title={inputValues.title} 
+                        content={inputValues.content}
+                        type={type}/>
                 </div>
             </form>
         );
