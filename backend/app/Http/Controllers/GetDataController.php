@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Database\Console\Migrations\StatusCommand;
 use Illuminate\Http\Request;
@@ -45,5 +46,14 @@ class GetDataController extends Controller
             'status' => 'Error',
             'message' => 'User does not exist'
         ], 404);
+    }
+
+    function getUnassignedCourses(){
+        $courses = Course::whereNull('instructor_id')->get();
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => $courses
+        ], 200);
     }
 }
