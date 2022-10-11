@@ -53,10 +53,19 @@ class ActionsController extends Controller
             ], 415);
         }
 
+        $course = Course::find($request->course_id);
+        if(!$course){
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Course does not exist'
+            ], 404);
+        }
+
+        $course->push('enrolled_ids', Auth::id());
         $user = User::find(Auth::id());
         $user->push('enrolled_in', $request->course_id);
 
-        if($user->save()){
+        if($user->save() || $course->save()){
             return response()->json([
                 'status' => 'Success',
                 'message' => 'Successfully enrolled in course'
