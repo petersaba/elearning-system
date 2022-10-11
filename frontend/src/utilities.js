@@ -212,3 +212,11 @@ export const createAnnouncement = async (title, content) => {
 
     return 'Announcement created successfully';
 }
+
+export const getCoursesNotEnrolledIn = async () =>{
+    const token = JSON.parse(localStorage.getItem('current_user')).token.original.access_token;
+
+    const response = await axiosGet('courses_not_enrolled_in', token);
+
+    return response.data.message;
+}
