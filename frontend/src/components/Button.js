@@ -14,6 +14,14 @@ const Button = (props) => {
             {props.text}</button>
         );
     }
+
+    if(props.type == 'Add Course'){
+        return (
+            <button type={props.submit ? "button" : "submit"} className="button" 
+            onClick={(e) => props.onClick(e, props.course_code, props.course_name)}>
+            {props.text}</button>
+        );
+    }
 }
 
 Button.defaultProps = {
