@@ -5,13 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Assignment;
 use App\Models\Course;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
-use Illuminate\Contracts\Validation\ValidatorAwareRule;
-// use Jenssegers\Mongodb\Auth;
 use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CreateController extends Controller
 {

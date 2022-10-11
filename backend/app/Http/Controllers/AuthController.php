@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Facades\JWTAuth;
-
 use App\Models\User;
-use App\Models\Assignment;
 use Illuminate\Http\Request;
 
 
