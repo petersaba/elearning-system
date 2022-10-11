@@ -41,4 +41,17 @@ class ActionsController extends Controller
             ], 201);
         }
     }
+
+    function enrollInCourse(Request $request){
+        $validator = validator($request->all(), ['id' => 'string|required']);
+        
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'Data is invalid'
+            ], 415);
+        }
+
+        
+    }
 }
