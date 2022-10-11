@@ -50,6 +50,13 @@ function App() {
             <Form type='Add Student'/>
           </>
         }/>
+        <Route path='/instructor/create_assignment' element={
+          <>
+            <Dashboard type='instructor'/>
+            <Navbar text='Create Assignment'/>
+            <Form type='Create Assignment'/>
+          </>
+        }/>
       </Routes>
     </section>
     </BrowserRouter>
