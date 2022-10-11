@@ -155,3 +155,11 @@ export const getUnassignedCourses = () => {
 
     return response.data.message;
 }
+
+export const getAllInstructors = () => {
+    const token = JSON.parse(localStorage.getItem('current_user')).token.original.access_token;
+
+    const response = axiosGet('type/instructor', token);
+
+    return response.data.message;
+}
