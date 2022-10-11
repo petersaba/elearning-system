@@ -18,7 +18,7 @@ const DropDown = ( props ) => {
         {Object.keys(props).map((value) => {
             if(value != 'onChange' && value != 'type'){
                 return (
-                    <option key={value} value={props[value].id}>{props.type == 'user' ? props[value].email : props[value].code}</option>
+                    <option key={value}>{props.type == 'instructor_id' ? props[value].email : props[value].code}</option>
                     );
                 }
             })} 

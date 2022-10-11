@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
-import { login, signUp, addCourse, getAllInstructors, getUnassignedCourses } from "../utilities";
+import { login, signUp, addCourse, getAllInstructors, getUnassignedCourses, assignInstructor } from "../utilities";
 import DropDown from "./DropDown";
 
 const Form = ({ type }) => {
@@ -150,17 +150,26 @@ const Form = ({ type }) => {
 
     // form to assign instructor to course
     if(type == 'Assign Instructor'){
+
+        async function changeErrorField(e, instructor_id, course_id){
+            e.preventDefault();
+            console.log(`instructor id: ${instructor_id}`);
+            console.log(`course id: ${course_id}`);
+            const message = await assignInstructor(instructor_id, course_id);
+            setError(message);
+        }
+
         return (
             <form className="form fix-position">
                 <h1>{type}</h1>
                 <span className="error">{error}</span>
-                <DropDown type='user' onChange={saveToInputValues} {...instructors}/>
-                <DropDown type='course' onChange={saveToInputValues} {...courses}/>
+                <DropDown type='instructor_id' onChange={saveToInputValues} {...instructors}/>
+                <DropDown type='course_id' onChange={saveToInputValues} {...courses}/>
                 <div>
                     <Button text={type} 
-                    // onClick={changeErrorField} 
-                    course_code={inputValues.course_code}
-                    course_name={inputValues.course_name}
+                    onClick={changeErrorField} 
+                    instructor_id={inputValues.instructor_id}
+                    course_id={inputValues.course_id}
                     type={type}/>
                 </div>
             </form>

@@ -55,7 +55,7 @@ export const axiosPost = async (api, data, token=null) => {
                                 });
     }catch(error){
         console.log('Error from API');
-        console.log(error.responses);
+        console.log(error);
         
         if(error.response)
             return error.response.data;
@@ -75,7 +75,6 @@ export const axiosGet = async (api, token=null) => {
         console.log(error);
         if(error.response)
             return error.response.data;
-        
     }
 }
 
@@ -176,8 +175,8 @@ export const assignInstructor = async (instructor_id, course_id) => {
     const token = JSON.parse(localStorage.getItem('current_user')).token.original.access_token;
 
     const data = new FormData();
-    data.append('instructor_id', instructor_id);
-    data.append('course_id', course_id);
+    data.append('instructor_email', instructor_id);
+    data.append('course_code', course_id);
     const response = await axiosPost('assign_instructor', data, token);
 
     if(response.data.status == 'Success')
