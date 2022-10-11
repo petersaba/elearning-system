@@ -22,11 +22,18 @@ function App() {
             <Form type={'Sign Up'}/>
           </>
         }/>
-        <Route path='/admin' element={
+        <Route path='/admin/add_user' element={
           <>
             <Dashboard type='admin'/>
             <Navbar/>
             <Form type='Add User'/>
+          </>
+        }/>
+        <Route path='/admin/add_course' element={
+          <>
+            <Dashboard type='admin'/>
+            <Navbar/>
+            <Form type='Add Course'/>
           </>
         }/>
       </Routes>
