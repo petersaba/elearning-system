@@ -25,15 +25,22 @@ function App() {
         <Route path='/admin/add_user' element={
           <>
             <Dashboard type='admin'/>
-            <Navbar/>
+            <Navbar text='Add User'/>
             <Form type='Add User'/>
           </>
         }/>
         <Route path='/admin/add_course' element={
           <>
             <Dashboard type='admin'/>
-            <Navbar/>
+            <Navbar text='Add Course'/>
             <Form type='Add Course'/>
+          </>
+        }/>
+        <Route path='/admin/assign_instructor' element={
+          <>
+            <Dashboard type='admin'/>
+            <Navbar text='Assign Instructor'/>
+            <Form type='Assign Instructor'/>
           </>
         }/>
       </Routes>
