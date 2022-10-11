@@ -221,7 +221,7 @@ export const getCoursesNotEnrolledIn = async () =>{
     return response.data.message;
 }
 
-export const enrollInCourse = async (course_code) => {
+export const enrollInCourse = (course_code) => {
     if(!course_code){
         return 'Please fill input fields';
     }
@@ -230,7 +230,15 @@ export const enrollInCourse = async (course_code) => {
 
     const data = new FormData();
     data.append('course_code', course_code);
-    const response = await axiosPost('enroll_in_course', data, token);
+    axiosPost('enroll_in_course', data, token);
 
     return 'Successfully enrolled in course';
+}
+
+export const getCoursesEnrolledIn = async () => {
+    const token = JSON.parse(localStorage.getItem('current_user')).token.original.access_token;
+
+    const response = await axiosGet('courses_enrolled_in', token);
+
+    return response.data.message;
 }
