@@ -147,3 +147,11 @@ export const addCourse = async (e, course_code, course_name) => {
     if(response.status == 'Error')
         return response.message;
 }
+
+export const getUnassignedCourses = () => {
+    const token = JSON.parse(localStorage.getItem('current_user')).token.original.access_token;
+
+    const response = axiosGet('unassigned_courses', token);
+
+    return response.data.message;
+}
