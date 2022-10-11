@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
-import { login, signUp, validateAddCourse } from "../utilities";
+import { login, signUp, addCourse, getAllInstructors, getUnassignedCourses } from "../utilities";
 import DropDown from "./DropDown";
 
 const Form = ({ type }) => {
@@ -17,7 +17,7 @@ const Form = ({ type }) => {
     }, [path]);
 
     // save input field value to InputValues object
-    function saveToInputValue(attribute, value){
+    function saveToInputValues(attribute, value){
         setInputValues({...inputValues, [attribute]: value});
     }
 
@@ -25,7 +25,18 @@ const Form = ({ type }) => {
 
     useEffect(() =>{
         setInputValues({type: 'student'});
+        getUnassignedCourses().then((response) => setCourses(response));
+        getAllInstructors().then((response) => setInstructors(response));
     }, []);
+
+    const [instructors, setInstructors] = useState();
+    const [courses, setCourses] = useState(); 
+
+    useEffect(() => {
+        console.log(instructors);
+        console.log(courses);
+    }, [courses, instructors]);
+    
 
     // Form for the login
     if(type == 'Login'){
@@ -39,8 +50,8 @@ const Form = ({ type }) => {
             <form className="form">
                 <h1>{type}</h1>
                 <span className="error">{error}</span>
-                <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValue}/>
-                <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
+                <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValues}/>
+                <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValues}/>
                 <div>
                     <Button text={type} onClick={changeErrorField} 
                         email={inputValues.email} 
@@ -64,10 +75,10 @@ const Form = ({ type }) => {
             <form className="form">
                 <h1>{type}</h1>
                 <span className="error">{error}</span>
-                <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValue}/>
-                <Input type={'text'} id="full_name" text={'Full Name'} onChange={saveToInputValue}/>
-                <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
-                <Input type={'password'} id="confirm_password" text={'Confirm Password'} onChange={saveToInputValue}/>
+                <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValues}/>
+                <Input type={'text'} id="full_name" text={'Full Name'} onChange={saveToInputValues}/>
+                <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValues}/>
+                <Input type={'password'} id="confirm_password" text={'Confirm Password'} onChange={saveToInputValues}/>
                 <div>
                     <Button text={type} onClick={changeErrorField} 
                         email={inputValues.email}
@@ -94,11 +105,11 @@ const Form = ({ type }) => {
             <form className="form fix-position">
                 <h1>{type}</h1>
                 <span className="error">{error}</span>
-                <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValue}/>
-                <Input type={'text'} id="full_name" text={'Full Name'} onChange={saveToInputValue}/>
-                <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
-                <Input type={'password'} id="confirm_password" text={'Confirm Password'} onChange={saveToInputValue}/>
-                <DropDown {...options} onChange={saveToInputValue}/>
+                <Input type={'text'} id="email" text={'Email'} onChange={saveToInputValues}/>
+                <Input type={'text'} id="full_name" text={'Full Name'} onChange={saveToInputValues}/>
+                <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValues}/>
+                <Input type={'password'} id="confirm_password" text={'Confirm Password'} onChange={saveToInputValues}/>
+                <DropDown {...options} onChange={saveToInputValues} type='user_type'/>
                 <div>
                     <Button text={type} onClick={changeErrorField} 
                         email={inputValues.email}
@@ -115,8 +126,8 @@ const Form = ({ type }) => {
     // form to create a course by the admin
     if(type == 'Add Course'){
 
-        function changeErrorField(e, course_code, course_name){
-            const message = validateAddCourse(e, course_code, course_name);
+        async function changeErrorField(e, course_code, course_name){
+            const message = await addCourse(e, course_code, course_name);
             setError(message ? message : 'Course has been created');
         }
 
@@ -124,8 +135,8 @@ const Form = ({ type }) => {
             <form className="form fix-position">
             <h1>{type}</h1>
             <span className="error">{error}</span>
-            <Input type={'text'} id="course_code" text={'Course Code'} onChange={saveToInputValue}/>
-            <Input type={'text'} id="course_name" text={'Course Name'} onChange={saveToInputValue}/>
+            <Input type={'text'} id="course_code" text={'Course Code'} onChange={saveToInputValues}/>
+            <Input type={'text'} id="course_name" text={'Course Name'} onChange={saveToInputValues}/>
             <div>
                 <Button text={type} 
                 onClick={changeErrorField} 
@@ -135,6 +146,25 @@ const Form = ({ type }) => {
             </div>
             </form>
         )
+    }
+
+    // form to assign instructor to course
+    if(type == 'Assign Instructor'){
+        return (
+            <form className="form fix-position">
+                <h1>{type}</h1>
+                <span className="error">{error}</span>
+                <DropDown type='user' onChange={saveToInputValues} {...instructors}/>
+                <DropDown type='course' onChange={saveToInputValues} {...courses}/>
+                <div>
+                    <Button text={type} 
+                    // onClick={changeErrorField} 
+                    course_code={inputValues.course_code}
+                    course_name={inputValues.course_name}
+                    type={type}/>
+                </div>
+            </form>
+        );
     }
 }
 

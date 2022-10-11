@@ -167,3 +167,19 @@ export const getAllInstructors = async () => {
 
     return response.data.message;
 }
+
+export const assignInstructor = async (instructor_id, course_id) => {
+
+    if(!instructor_id || !course_id)
+        return 'Please fill all fields';
+
+    const token = JSON.parse(localStorage.getItem('current_user')).token.original.access_token;
+
+    const data = new FormData();
+    data.append('instructor_id', instructor_id);
+    data.append('course_id', course_id);
+    const response = await axiosPost('assign_instructor', data, token);
+
+    if(response.data.status == 'Success')
+        return 'Instructor assigned successfully';
+}
