@@ -83,6 +83,7 @@ export const validateLogin = async (e, email, password) => {
     const data = new FormData();
     data.append('email', email);
     data.append('password', password);
+
     const response = await axiosPost('login', data);
     if(response.status == 'Error'){
         return response.message;
@@ -90,13 +91,12 @@ export const validateLogin = async (e, email, password) => {
     localStorage.setItem('currentUser', JSON.stringify(response.data.message));
 }
 
-export const validateSignUp = (e, email, full_name, password, confirm_password, type) => {
+export const validateSignUp = async (e, email, full_name, password, confirm_password, type) => {
     e.preventDefault();
     if(email == '' || password == '' || full_name == '' || confirm_password == '')
         return 'Please fill all fields';
-    const message = validateLogin(e, email, password);
-    if(message)
-        return message;
+    if(!checkValidEmail(email))
+        return 'Invalid email format';
     if(!checkStrongPassword(password))
         return 'password not strong enough';
     if(!samePasswords(password, confirm_password))
@@ -108,5 +108,8 @@ export const validateSignUp = (e, email, full_name, password, confirm_password, 
     data.append('password', password);
     data.append('confirm_password', confirm_password);
 
-    axiosPost(`register/${type}`, data);
+    const response = await axiosPost(`register/${type}`, data);
+    if(response.status == 'Error'){
+        return response.message;
+    }
 }
