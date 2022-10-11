@@ -27,6 +27,20 @@ const Dashboard = ({ type }) => {
             </div>
         );
     }
+
+    if(type == 'student'){
+        return (
+            <div className="dashboard">
+                <h3>{full_name}</h3>
+                <ul>
+                    <li><Link to='/student/enroll_in_course'>Enroll in course</Link></li>
+                    <li><Link to='/student/enrolled_courses'>View enrolled courses</Link></li>
+                    <li><Link to='/student/assignments'>View assignments</Link></li>
+                    <li><Link to='/student/announcements'>View announcements</Link></li>
+                </ul>
+            </div>
+        );
+    }
 }
 
 export default Dashboard;
