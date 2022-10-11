@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('register/{type?}', [AuthController::class, 'addUser']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::group(['middleware' => 'auth:api'], function(){
-    Route::post('course', [CreateController::class, 'addCourse']);
-    Route::post('assignment', [CreateController::class, 'createAssignment']);
-    Route::post('announcement', [CreateController::class, 'createAnnouncement']);
+    Route::post('courses', [CreateController::class, 'addCourse']);
+    Route::post('assignments', [CreateController::class, 'createAssignment']);
+    Route::post('announcements', [CreateController::class, 'createAnnouncement']);
     Route::get('type/{type}', [GetDataController::class, 'getUsersByType']);
     Route::get('users/{id}', [GetDataController::class, 'getUserById']);
     Route::post('assign_instructor', [ActionsController::class, 'assignInstructorToCourse']);
