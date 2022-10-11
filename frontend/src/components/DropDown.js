@@ -5,7 +5,7 @@ const DropDown = ( props ) => {
             {Object.keys(props).map((value) => {
                 if(value != 'onChange' || value != 'type'){
                     return (
-                        <option value={props[value]}>{props[value]}</option>
+                        <option key={value} value={props[value]}>{props[value]}</option>
                         );
                     }
                 })}
@@ -16,12 +16,12 @@ const DropDown = ( props ) => {
     return (
         <select className="select-input" onChange={(e) => {props.onChange(props.type, e.target.value)}}>
         {Object.keys(props).map((value) => {
-            if(value != 'onChange' || value != 'type'){
+            if(value != 'onChange' && value != 'type'){
                 return (
-                    <option value={props[value].id}>{props.type == 'user' ? props[value].full_name : props.name}</option>
+                    <option key={value} value={props[value].id}>{props.type == 'user' ? props[value].email : props[value].code}</option>
                     );
                 }
-            })}
+            })} 
         </select>
     )
 }
