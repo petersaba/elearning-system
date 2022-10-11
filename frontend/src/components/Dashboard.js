@@ -6,9 +6,9 @@ const Dashboard = ({ type, full_name }) => {
             <div className="dashboard">
                 <h3>Admin full name</h3>
                 <ul>
-                    <li><Link to='/admin'>Add User</Link></li>
-                    <li><Link to='/admin'>Add Course</Link></li>
-                    <li><Link to='/admin'>Assign Instructor</Link></li>
+                    <li><Link to='/admin/add_user'>Add User</Link></li>
+                    <li><Link to='/admin/add_course'>Add Course</Link></li>
+                    <li><Link to='/admin/assign_instructor'>Assign Instructor</Link></li>
                 </ul>
             </div>
         );
