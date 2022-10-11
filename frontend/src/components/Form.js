@@ -93,7 +93,7 @@ const Form = ({ type }) => {
     }
 
     // form to add a user by the admin
-    if(type == 'Add User'){
+    if(type == 'Add User' || type== 'Add Student'){
 
         async function changeErrorField(e, email, full_name, password, confirm_password, user_type){
             const message = await signUp(e, email, full_name, password, confirm_password, user_type);
@@ -109,14 +109,14 @@ const Form = ({ type }) => {
                 <Input type={'text'} id="full_name" text={'Full Name'} onChange={saveToInputValues}/>
                 <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValues}/>
                 <Input type={'password'} id="confirm_password" text={'Confirm Password'} onChange={saveToInputValues}/>
-                <DropDown {...options} onChange={saveToInputValues} type='user_type'/>
+                {type != 'Add Student' ? <DropDown {...options} onChange={saveToInputValues} type='user_type'/> : ''}
                 <div>
                     <Button text={type} onClick={changeErrorField} 
                         email={inputValues.email}
                         full_name={inputValues.full_name}
                         password={inputValues.password}
                         confirm_password={inputValues.confirm_password}
-                        user_type={inputValues.type}
+                        user_type={type != 'Add Student' ? inputValues.type : 'student'}
                         type={type}/>
                 </div>
             </form>
