@@ -3,6 +3,7 @@ import Button from "./Button";
 import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
 import { validateLogin, validateSignUp } from "../utilities";
+import DropDown from "./DropDown";
 
 const Form = ({ type }) => {
     const [inputValues, setInputValues] = useState({});
@@ -12,6 +13,7 @@ const Form = ({ type }) => {
     path = path == window.location.pathname ? path : window.location.pathname;    
     useEffect(() => {
         setInputValues({});
+        setError('');
     }, [path]);
 
     // save input field value to InputValues object
@@ -49,8 +51,8 @@ const Form = ({ type }) => {
     // form for the sign up
     if(type == 'Sign Up'){
 
-        function changeErrorField(e, email, full_name, password, confirm_password){
-            const message = validateSignUp(e, email, full_name, password, confirm_password, 'admin');
+        async function changeErrorField(e, email, full_name, password, confirm_password){
+            const message = await validateSignUp(e, email, full_name, password, confirm_password, 'admin');
             setError(message ? message : 'Account has been created');
         }
 
@@ -76,11 +78,12 @@ const Form = ({ type }) => {
     }
 
     if(type == 'Add User'){
-        function changeErrorField(e, email, full_name, password, confirm_password){
-            const message = validateSignUp(e, email, full_name, password, confirm_password);
+        function changeErrorField(e, email, full_name, password, confirm_password, type){
+            const message = validateSignUp(e, email, full_name, password, confirm_password, type);
             setError(message ? message : '');
         }
 
+        const test = ['student', 'instructor'];
         return (
             <form className="form fix-position">
                 <h1>{type}</h1>
@@ -89,9 +92,9 @@ const Form = ({ type }) => {
                 <Input type={'text'} id="full_name" text={'Full Name'} onChange={saveToInputValue}/>
                 <Input type={'password'} id="password" text={'Password'} onChange={saveToInputValue}/>
                 <Input type={'password'} id="confirm_password" text={'Confirm Password'} onChange={saveToInputValue}/>
+                <DropDown {...test} onChange={saveToInputValue}/>
                 <div>
-                    <Button text={type} 
-                    onClick={changeErrorField} 
+                    <Button text={type} onClick={changeErrorField} 
                         email={inputValues.email}
                         full_name={inputValues.full_name}
                         password={inputValues.password}
