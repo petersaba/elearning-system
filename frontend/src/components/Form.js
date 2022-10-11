@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
-import { login, signUp, addCourse, getAllInstructors, getUnassignedCourses, assignInstructor, createAssignment } from "../utilities";
+import { login, signUp, addCourse, getAllInstructors, getUnassignedCourses, assignInstructor, createAssignment, createAnnouncement } from "../utilities";
 import DropDown from "./DropDown";
 
 const Form = ({ type }) => {
@@ -181,8 +181,13 @@ const Form = ({ type }) => {
         
         async function changeErrorField(e, title, content){
             e.preventDefault();
-            const message = await createAssignment(title, content);
-            setError(message);
+            if(type == 'Create Assignment'){
+                const message = await createAssignment(title, content);
+                setError(message);
+            }else{
+                const message = await createAnnouncement(title, content);
+                setError(message);
+            }
         }
 
         return (
