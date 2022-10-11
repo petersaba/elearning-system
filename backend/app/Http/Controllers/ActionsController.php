@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ActionsController extends Controller
 {
     function assignInstructorToCourse(Request $request){
-        $instructor = User::find($request->instructor_id);
+        $instructor = User::where('email', $request->instructor_email)->get()->first();
         if(!$instructor || $instructor->type != 'instructor'){
             return response()->json([
                 'status' => 'Error',
@@ -17,7 +17,7 @@ class ActionsController extends Controller
             ], 404);
         }
 
-        $course = Course::find($request->course_id);
+        $course = Course::where('code', $request->course_code)->get()->first();
         if(!$course){
             return response()->json([
                 'status' => 'Error',
@@ -32,8 +32,8 @@ class ActionsController extends Controller
             ], 415);
         }
 
-        $course->instructor_id = $request->instructor_id;
-        $instructor->push('courses', $request->course_id);
+        $course->instructor_id = $instructor->id;
+        $instructor->push('courses', $course->id);
 
         if($instructor->save() && $course->save()){
             return response()->json([
