@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Migrations\StatusCommand;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Illuminate\Support\Facades\Auth;
 
 class GetDataController extends Controller
 {
@@ -54,6 +55,15 @@ class GetDataController extends Controller
         return response()->json([
             'status' => 'Success',
             'message' => $courses
+        ], 200);
+    }
+
+    function getCoursesNotEnrolledIn(){
+        $courses = Course::where('enrolled_ids', '!=', Auth::id())->get();
+
+        return response()->json([
+            'status' => 'Success',
+            'message'=> $courses
         ], 200);
     }
 }
