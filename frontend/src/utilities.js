@@ -55,6 +55,7 @@ export const axiosPost = async (api, data, token=null) => {
                                 });
     }catch(error){
         console.log('Error from API');
+        console.log(error.responses);
         return error.response.data;
     }
 }
@@ -69,6 +70,7 @@ export const axiosGet = async (api, token=null) => {
             });
     }catch(error){
         console.log('Error from Api');
+        console.log(error);
         return error.response.data;
     }
 }
@@ -85,10 +87,11 @@ export const login = async (e, email, password) => {
     data.append('password', password);
 
     const response = await axiosPost('login', data);
-    if(response.status == 'Error'){
+    if(response.status == 'Error')
         return response.message;
-    }
-    localStorage.setItem('currentUser', JSON.stringify(response.data.message));
+    
+    console.log(response.data.message);
+    localStorage.setItem('current_user', JSON.stringify(response.data.message));
 }
 
 export const signUp = async (e, email, full_name, password, confirm_password, type) => {
@@ -106,13 +109,12 @@ export const signUp = async (e, email, full_name, password, confirm_password, ty
     data.append('confirm_password', confirm_password);
 
     const response = await axiosPost(`register/${type}`, data);
-    if(response.status == 'Error'){
+    if(response.status == 'Error')
         return response.message;
-    }
+    
 }
 
 export const validateSignUp = (e, email, full_name, password, confirm_password, type) => {
-    e.preventDefault();
 
     if(!email || !password || !full_name || !confirm_password || !type)
         return 'Please fill all fields';
@@ -124,9 +126,24 @@ export const validateSignUp = (e, email, full_name, password, confirm_password, 
         return 'passwords do not match';
 }
 
-export const validateAddCourse = (e, course_id, course_name) => {
-    e.preventDefault();
-
-    if(!course_id || !course_name)
+export const validateAddCourse = (e, course_code, course_name) => {
+    if(!course_code || !course_name)
         return 'Please fill all fields';
+}
+
+export const addCourse = async (e, course_code, course_name) => {
+    e.preventDefault();
+    
+    const message = validateAddCourse(e, course_code, course_name);
+    if(message)
+    return message;
+    
+    const token = JSON.parse(localStorage.getItem('current_user')).token.original.access_token;
+    const data = new FormData();
+    data.append('code', course_code);
+    data.append('name', course_name)
+    const response = await axiosPost('course', data, token);
+    
+    if(response.status == 'Error')
+        return response.message;
 }
