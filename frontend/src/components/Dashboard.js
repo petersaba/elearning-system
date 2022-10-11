@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 
-const Dashboard = ({ type, full_name }) => {
+const Dashboard = ({ type }) => {
+    const full_name = JSON.parse(localStorage.getItem('current_user')).full_name;
     if(type == 'admin'){
         return (
             <div className="dashboard">
-                <h3>Admin full name</h3>
+                <h3>{full_name}</h3>
                 <ul>
                     <li><Link to='/admin/add_user'>Add User</Link></li>
                     <li><Link to='/admin/add_course'>Add Course</Link></li>
@@ -17,7 +18,7 @@ const Dashboard = ({ type, full_name }) => {
     if(type == 'instructor'){
         return (
             <div className="dashboard">
-                <h3>instructor full name</h3>
+                <h3>{full_name}</h3>
                 <ul>
                     <li><Link to='/instructor/add_student'>Add Student</Link></li>
                     <li><Link to='/instructor/create_assignment'>Add Assignment</Link></li>
