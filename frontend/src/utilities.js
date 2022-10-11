@@ -123,3 +123,10 @@ export const validateSignUp = (e, email, full_name, password, confirm_password, 
     if(!samePasswords(password, confirm_password))
         return 'passwords do not match';
 }
+
+export const validateAddCourse = (e, course_id, course_name) => {
+    e.preventDefault();
+
+    if(!course_id || !course_name)
+        return 'Please fill all fields';
+}
