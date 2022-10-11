@@ -5,7 +5,7 @@ const DropDown = ( props ) => {
             {Object.keys(props).map((value) => {
                 if(value != 'onChange' || value != 'type'){
                     return (
-                        <option key={value} value={props[value]}>{props[value]}</option>
+                        <option key={value}>{props[value]}</option>
                         );
                     }
                 })}
