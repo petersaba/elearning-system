@@ -42,7 +42,7 @@ const Button = (props) => {
     if(props.type == 'Enroll In Course'){
         return (
             <button type={props.submit ? "submit" : "button"} className="button" 
-            onClick={(e) => props.onClick(e, props.course_id)}>
+            onClick={(e) => props.onClick(e, props.course_code)}>
             {props.text}</button>
         );
     }

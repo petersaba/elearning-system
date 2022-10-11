@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
-import { login, signUp, addCourse, getAllInstructors, getUnassignedCourses, assignInstructor, createAssignment, createAnnouncement } from "../utilities";
+import { login, signUp, addCourse, getAllInstructors, getUnassignedCourses, assignInstructor, createAssignment, createAnnouncement, getCoursesNotEnrolledIn, enrollInCourse } from "../utilities";
 import DropDown from "./DropDown";
 
 const Form = ({ type }) => {
@@ -27,10 +27,12 @@ const Form = ({ type }) => {
         setInputValues({type: 'student'});
         getUnassignedCourses().then((response) => setCourses(response));
         getAllInstructors().then((response) => setInstructors(response));
+        getCoursesNotEnrolledIn().then((response) => setAvailableCourses(response));
     }, []);
 
     const [instructors, setInstructors] = useState();
     const [courses, setCourses] = useState(); 
+    const [available_courses, setAvailableCourses] = useState(); 
 
     useEffect(() => {
         console.log(instructors);
@@ -148,15 +150,20 @@ const Form = ({ type }) => {
         )
     }
 
-    // form to assign instructor to course
-    if(type == 'Assign Instructor'){
+    // form to assign instructor to course or student to enroll in course
+    if(type == 'Assign Instructor' || type == 'Enroll In Course'){
 
         async function changeErrorField(e, instructor_email, course_code){
             e.preventDefault();
-            console.log(`instructor id: ${instructor_email}`);
-            console.log(`course id: ${course_code}`);
             const message = await assignInstructor(instructor_email, course_code);
             setCourses(courses.filter((course) => course.code != course_code));
+            setError(message);
+        }
+
+        async function enrollFeedback(e, course_code){
+            e.preventDefault();
+            const message = await enrollInCourse(course_code);
+            setAvailableCourses(available_courses.filter((course) => course.code != course_code));
             setError(message);
         }
 
@@ -164,13 +171,15 @@ const Form = ({ type }) => {
             <form className="form fix-position">
                 <h1>{type}</h1>
                 <span className="error">{error}</span>
-                <DropDown type='instructor_email' onChange={saveToInputValues} {...instructors}/>
-                <DropDown type='course_code' onChange={saveToInputValues} {...courses}/>
+                {type == 'Assign Instructor' ? <DropDown type='instructor_email' onChange={saveToInputValues} {...instructors}/> : 
+                    <DropDown type='course_code' onChange={saveToInputValues} {...available_courses}/>}
+                {type == 'Assign Instructor' ? <DropDown type='course_code' onChange={saveToInputValues} {...courses}/> : ''}
                 <div>
                     <Button text={type} 
-                    onClick={changeErrorField} 
+                    onClick={type == 'Assign Instructor' ? changeErrorField : enrollFeedback} 
                     instructor_email={inputValues.instructor_email}
                     course_code={inputValues.course_code}
+                    // course_id={inputValues.course_id}
                     type={type}/>
                 </div>
             </form>
