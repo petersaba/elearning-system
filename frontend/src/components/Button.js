@@ -7,7 +7,7 @@ const Button = (props) => {
         );
     }
 
-    if(props.type == 'Sign Up'){
+    if(props.type == 'Sign Up' || props.type == 'Add User'){
         return (
             <button type={props.submit ? "button" : "submit"} className="button" 
             onClick={(e) => props.onClick(e, props.email, props.full_name, props.password, props.confirm_password)}>
