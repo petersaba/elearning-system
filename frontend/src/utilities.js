@@ -1,5 +1,4 @@
 import axios from "axios";
-import Form from "./components/Form";
 
 export const checkPattern = (value, pattern) => {
     return value.search(pattern);
@@ -94,8 +93,8 @@ export const login = async (e, email, password) => {
     if(response.status == 'Error')
         return response.message;
     
-    console.log(response.data.message);
     localStorage.setItem('current_user', JSON.stringify(response.data.message));
+    return response.data.message.type;
 }
 
 export const signUp = async (e, email, full_name, password, confirm_password, type) => {
