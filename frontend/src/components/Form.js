@@ -4,6 +4,8 @@ import Input from "./Input";
 import LoginSignUpSwitch from "./LoginSignUpSwitch";
 import { login, signUp, addCourse, getAllInstructors, getUnassignedCourses, assignInstructor, createAssignment, createAnnouncement, getCoursesNotEnrolledIn, enrollInCourse } from "../utilities";
 import DropDown from "./DropDown";
+import { Navigate } from "react-router-dom";
+
 
 const Form = ({ type }) => {
     const [inputValues, setInputValues] = useState({});
@@ -45,7 +47,8 @@ const Form = ({ type }) => {
         
         async function changeErrorField(e, email, password){
             const message = await login(e, email, password);
-            setError(message ? message : '');
+            setError((message != 'admin' && message != 'instructor' && message != 'student') ? message : '');
+            return message;
         }
 
         return (

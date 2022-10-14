@@ -1,8 +1,26 @@
+import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 const Button = (props) => {
+    const navigate = useNavigate();
+
     if(props.type == 'Login'){
+
+        const changePage = async (e) => {
+            const message = await props.onClick(e, props.email, props.password);
+            console.log(message);
+            if(message == 'admin'){
+                navigate('/admin/add_user');
+            }else if((message == 'instructor')){
+                navigate('/instructor/add_student')
+            }else if(message == 'student'){
+                navigate('/student/enroll_in_course');
+            }
+            
+            }
         return (
             <button type={props.submit ? "submit" : "button"} className="button" 
-            onClick={(e) => props.onClick(e, props.email, props.password)}>
+            onClick={changePage}>
             {props.text}</button>
         );
     }
